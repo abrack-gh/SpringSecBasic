@@ -1,13 +1,32 @@
 package com.brack.BrankBank.controller;
 
+import com.brack.BrankBank.model.Contact;
+import com.brack.BrankBank.repositories.ContactRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.Random;
 
 @RestController
 public class ContactController {
 
-    @GetMapping("/contact")
-    public String saveContactDetails(){
-        return "Details saved";
+    @Autowired
+    private ContactRepository contactRepository;
+
+    @PostMapping("/contact")
+    public Contact saveContactDetails(@RequestBody Contact contact){
+        contact.setContactId(getServiceReqNumber());
+        contact.setCreatedDate(new Date(System.currentTimeMillis()));
+        return contactRepository.save(contact);
+    }
+
+    public String getServiceReqNumber(){
+        Random random = new Random();
+        int rand = random.nextInt(99999999 - 9999) + 9999;
+        return "SR" + rand;
     }
 }
