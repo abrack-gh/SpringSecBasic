@@ -27,7 +27,7 @@ public class ProjectSecurityConfig {
 //CUSTOM SECURITY CONFIGURATIONS
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/my-account", "/my-balance", "/my-cards").authenticated()
+                .requestMatchers("/my-account", "/my-balance", "/my-cards", "/user", "/my-loans").authenticated()
                 .requestMatchers("/notices", "/contact", "/register").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
