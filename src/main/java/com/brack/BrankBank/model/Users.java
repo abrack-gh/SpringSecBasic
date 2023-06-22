@@ -21,7 +21,7 @@ public class Users {
     private String email;
 
     @Column(name = "mobile_number")
-    private String mobilNumber;
+    private String mobileNumber;
 
     @Column(name = "pwd")
     private String password;
@@ -55,12 +55,12 @@ public class Users {
         this.email = email;
     }
 
-    public String getMobilNumber() {
-        return mobilNumber;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setMobilNumber(String mobilNumber) {
-        this.mobilNumber = mobilNumber;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getPassword() {

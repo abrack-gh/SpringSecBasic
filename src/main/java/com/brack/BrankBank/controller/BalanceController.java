@@ -18,7 +18,7 @@ public class BalanceController {
     @GetMapping("/my-balance")
     public List<AccountTransactions> getBalance(@RequestParam int id){
         List<AccountTransactions> accountTransactions = accountTransactionsRepository.
-                findByCustomerIdOOrderByTransactionDt(id);
+                findByCustomerIdOrderByTransactionDt(id);
         if(accountTransactions != null){
             return accountTransactions;
         } else {
