@@ -41,12 +41,12 @@ public class ProjectSecurityConfig {
 
                         return configuration;
                     };
-                }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact", "/register")
+                }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers( "/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                .requestMatchers("/my-account", "/my-balance", "/my-cards", "/user", "/my-loans").authenticated()
-                .requestMatchers("/notices", "/contact", "/register").permitAll()
+                .requestMatchers("/my-account", "/my-balance", "/my-cards", "/contact", "/user", "/my-loans").authenticated()
+                .requestMatchers("/notices", "/register").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
         return http.build();
