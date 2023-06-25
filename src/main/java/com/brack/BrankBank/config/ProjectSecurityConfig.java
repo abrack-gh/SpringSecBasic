@@ -41,7 +41,8 @@ public class ProjectSecurityConfig {
 
                         return configuration;
                     };
-                }).and().csrf().disable()
+                }).and().csrf().ignoringRequestMatchers("/contact", "/register") //CSRF Protection
+                .and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/my-account", "/my-balance", "/my-cards", "/user", "/my-loans").authenticated()
                 .requestMatchers("/notices", "/contact", "/register").permitAll()
