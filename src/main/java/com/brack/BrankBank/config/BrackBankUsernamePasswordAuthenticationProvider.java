@@ -1,6 +1,7 @@
 package com.brack.BrankBank.config;
 
 
+import com.brack.BrankBank.model.Authority;
 import com.brack.BrankBank.model.Users;
 import com.brack.BrankBank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class BrackBankUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
@@ -33,9 +35,7 @@ public class BrackBankUsernamePasswordAuthenticationProvider implements Authenti
         List<Users> users = userRepository.findByEmail(username);
         if(users.size() > 0){
             if(passwordEncoder.matches(password, users.get(0).getPassword())){
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(users.get(0).getRole()));
-                return new UsernamePasswordAuthenticationToken(username, password, authorities);
+                return new UsernamePasswordAuthenticationToken(username, password, getGrantedAuthorities(users.get(0).getAuthorities()));
             } else {
                 throw new BadCredentialsException("Incorrect credentials");
             }
@@ -47,5 +47,14 @@ public class BrackBankUsernamePasswordAuthenticationProvider implements Authenti
     @Override
     public boolean supports(Class<?> authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities){
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for(Authority authority : authorities){
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+        }
+
+        return grantedAuthorities;
     }
 }
