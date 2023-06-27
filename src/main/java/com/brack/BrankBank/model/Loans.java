@@ -11,12 +11,12 @@ public class Loans {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name="native", strategy = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "loan_number")
-    private int loanNumber;
+    private Integer loanNumber;
 
     @Column(name = "customer_id")
-    private int customerId;
+    private Integer customerId;
 
     @Column(name = "start_dt")
     private Date startDate;
@@ -33,22 +33,22 @@ public class Loans {
     @Column(name = "outstanding_amount")
     private int outstandingBalance;
 
-    @Column(name = "created_dt")
+    @Column(name = "create_dt")
     private Date createdDate;
 
-    public int getLoanNumber() {
+    public Integer getLoanNumber() {
         return loanNumber;
     }
 
-    public void setLoanNumber(int loanNumber) {
+    public void setLoanNumber(Integer loanNumber) {
         this.loanNumber = loanNumber;
     }
 
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -100,3 +100,5 @@ public class Loans {
         this.createdDate = createdDate;
     }
 }
+
+

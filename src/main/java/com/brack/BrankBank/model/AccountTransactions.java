@@ -16,7 +16,7 @@ public class AccountTransactions {
     private String transactionId;
 
     @Column(name = "account_number")
-    private Integer accountNumber;
+    private long accountNumber;
 
     @Column(name = "customer_id")
     private Integer customerId;
@@ -47,11 +47,11 @@ public class AccountTransactions {
         this.transactionId = transactionId;
     }
 
-    public Integer getAccountNumber() {
+    public long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Integer accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
 

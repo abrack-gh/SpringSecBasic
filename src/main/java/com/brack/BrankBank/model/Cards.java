@@ -13,43 +13,35 @@ public class Cards {
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "card_id")
-    private int cardId;
-
-    @Column(name = "card_number")
-    private String cardNumber;
+    private Integer cardId;
 
     @Column(name = "customer_id")
     private Integer customerId;
+
+    @Column(name = "card_number")
+    private String cardNumber;
 
     @Column(name = "card_type")
     private String cardType;
 
     @Column(name = "total_limit")
-    private int totalLimit;
+    private Integer totalLimit;
 
     @Column(name = "amount_used")
-    private int amountUsed;
+    private Integer amountUsed;
 
     @Column(name = "available_amount")
-    private int availableAmount;
+    private Integer availableAmount;
 
     @Column(name = "create_dt")
     private Date createdDate;
 
-    public int getCardId() {
+    public Integer getCardId() {
         return cardId;
     }
 
-    public void setCardId(int cardId) {
+    public void setCardId(Integer cardId) {
         this.cardId = cardId;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
     }
 
     public Integer getCustomerId() {
@@ -60,6 +52,14 @@ public class Cards {
         this.customerId = customerId;
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     public String getCardType() {
         return cardType;
     }
@@ -68,27 +68,27 @@ public class Cards {
         this.cardType = cardType;
     }
 
-    public int getTotalLimit() {
+    public Integer getTotalLimit() {
         return totalLimit;
     }
 
-    public void setTotalLimit(int totalLimit) {
+    public void setTotalLimit(Integer totalLimit) {
         this.totalLimit = totalLimit;
     }
 
-    public int getAmountUsed() {
+    public Integer getAmountUsed() {
         return amountUsed;
     }
 
-    public void setAmountUsed(int amountUsed) {
+    public void setAmountUsed(Integer amountUsed) {
         this.amountUsed = amountUsed;
     }
 
-    public int getAvailableAmount() {
+    public Integer getAvailableAmount() {
         return availableAmount;
     }
 
-    public void setAvailableAmount(int availableAmount) {
+    public void setAvailableAmount(Integer availableAmount) {
         this.availableAmount = availableAmount;
     }
 

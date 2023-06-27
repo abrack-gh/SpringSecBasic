@@ -21,10 +21,9 @@ public class Contact {
     @Column(name = "contact_email")
     private String email;
 
-    @Column(name = "subject")
     private String subject;
 
-    @Column(name = "message")
+
     private String message;
 
     @Column(name = "create_dt")
