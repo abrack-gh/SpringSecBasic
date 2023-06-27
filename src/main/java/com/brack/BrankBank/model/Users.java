@@ -27,6 +27,7 @@ public class Users {
     private String mobileNumber;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "pwd")
     private String password;
     @Column(name = "role")
     private String role;
