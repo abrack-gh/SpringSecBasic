@@ -45,10 +45,10 @@ public class ProjectSecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                .requestMatchers("/my-account").hasAnyAuthority("VIEWACCOUNT") //Any AUTHORITY
-                .requestMatchers("/my-balance").hasAnyAuthority("VIEWACCOUNT", "VIEWBALANCE")
-                .requestMatchers("/my-loans").hasAuthority("VIEWLOANS") // ONLY THOSE WITH VIEW LOANS AUTH in database
-                .requestMatchers("/my-cards").hasAuthority("VIEWCARDS") // ONLY THOSE WITH VIEW CARDS AUTH in database
+                .requestMatchers("/my-account").hasRole("USER") //Any AUTHORITY
+                .requestMatchers("/my-balance").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/my-loans").hasRole("USER") // ONLY THOSE WITH VIEW LOANS AUTH in database
+                .requestMatchers("/my-cards").hasAuthority("USER") // ONLY THOSE WITH VIEW CARDS AUTH in database
                 .requestMatchers ("/user").authenticated()
                 .requestMatchers("/notices", "/register").permitAll()
                 .and().formLogin()
