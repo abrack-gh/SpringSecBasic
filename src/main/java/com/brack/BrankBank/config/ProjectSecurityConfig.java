@@ -1,6 +1,7 @@
 package com.brack.BrankBank.config;
 
 import com.brack.BrankBank.filter.CsrfCookieFilter;
+import com.brack.BrankBank.filter.RequestValidationBeforeFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +45,7 @@ public class ProjectSecurityConfig {
                 }).and().csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers( "/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class);
                 .authorizeHttpRequests()
                 .requestMatchers("/my-account").hasAnyRole("USER", "ADMIN") //Any AUTHORITY
                 .requestMatchers("/my-balance").hasAnyRole("USER", "ADMIN")
