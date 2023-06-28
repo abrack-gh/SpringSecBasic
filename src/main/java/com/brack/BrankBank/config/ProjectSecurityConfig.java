@@ -1,6 +1,5 @@
 package com.brack.BrankBank.config;
 
-import com.brack.BrankBank.filter.AuthoritiesLoggingAfterFilter;
 import com.brack.BrankBank.filter.CsrfCookieFilter;
 import com.brack.BrankBank.filter.RequestValidationBeforeFilter;
 import jakarta.servlet.http.HttpServletRequest;
