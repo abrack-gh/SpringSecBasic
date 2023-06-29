@@ -1,9 +1,6 @@
 package com.brack.BrankBank.config;
 
-import com.brack.BrankBank.filter.AuthoritiesLoggingAfterFilter;
-import com.brack.BrankBank.filter.AuthoritiesLoggingAtFilter;
-import com.brack.BrankBank.filter.CsrfCookieFilter;
-import com.brack.BrankBank.filter.RequestValidationBeforeFilter;
+import com.brack.BrankBank.filter.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +15,8 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -30,8 +29,7 @@ public class ProjectSecurityConfig {
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
 //CUSTOM SECURITY CONFIGURATIONS
-        http.securityContext().requireExplicitSave(false)
-                .and().sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .cors().configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -40,6 +38,7 @@ public class ProjectSecurityConfig {
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setExposedHeaders(Arrays.asList("Authorization"));
                         configuration.setMaxAge(3600L);
 
                         return configuration;
@@ -49,6 +48,7 @@ public class ProjectSecurityConfig {
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests()
                 .requestMatchers("/my-account").hasAnyRole("USER", "ADMIN") //Any AUTHORITY
