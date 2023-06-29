@@ -49,8 +49,7 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
-
-                .authorizeHttpRequests()
+                .authorizeRequests()
                 .requestMatchers("/my-account").hasAnyRole("USER", "ADMIN") //Any AUTHORITY
                 .requestMatchers("/my-balance").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/my-loans").hasAnyRole("USER", "ADMIN") // ONLY THOSE WITH VIEW LOANS AUTH

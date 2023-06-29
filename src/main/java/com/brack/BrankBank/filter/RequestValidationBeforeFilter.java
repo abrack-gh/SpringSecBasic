@@ -23,20 +23,20 @@ public class RequestValidationBeforeFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String header = req.getHeader(AUTHORIZATION); //Receive authorisation header from Angular application
+        String header = req.getHeader(AUTHORIZATION);
         if (header != null) {
             header = header.trim();
             if (StringUtils.startsWithIgnoreCase(header, AUTHENTICATION_SCHEME_BASIC)) {
-                byte[] base64Token = header.substring(6).getBytes(StandardCharsets.UTF_8); //Extract from header String from 6th position. Do not want initial text from auth header
+                byte[] base64Token = header.substring(6).getBytes(StandardCharsets.UTF_8);
                 byte[] decoded;
                 try {
                     decoded = Base64.getDecoder().decode(base64Token);
                     String token = new String(decoded, getCredentialsCharset(req));
-                    int delim = token.indexOf(":"); //Separate string using delimiter
+                    int delim = token.indexOf(":");
                     if (delim == -1) {
                         throw new BadCredentialsException("Invalid basic authentication token");
                     }
-                    String email = token.substring(0, delim); //USe substring to extract very first value inside authorization header which is username
+                    String email = token.substring(0, delim);
                     if(email.toLowerCase().contains("test")) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         return;
@@ -46,7 +46,7 @@ public class RequestValidationBeforeFilter implements Filter {
                 }
             }
         }
-        chain.doFilter(request, response); //invoke next filter in the chain
+        chain.doFilter(request, response);
     }
 
     protected Charset getCredentialsCharset(HttpServletRequest request) {
@@ -58,4 +58,3 @@ public class RequestValidationBeforeFilter implements Filter {
     }
 
 }
-
