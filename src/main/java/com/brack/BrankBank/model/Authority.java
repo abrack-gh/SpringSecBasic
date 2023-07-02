@@ -11,11 +11,11 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Users users;
-
-    private String name;
 
     public Long getId() {
         return id;
@@ -25,19 +25,19 @@ public class Authority {
         this.id = id;
     }
 
-    public Users getUsers() {
-        return users;
-    }
-
-    public void setUsers(Users users) {
-        this.users = users;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setCustomer(Users users) {
+        this.users = users;
     }
 }

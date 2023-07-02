@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,39 +21,40 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody Users users){
-        Users savedUser = null;
-        ResponseEntity response = null;
-        try {
-            String hashPassword = passwordEncoder.encode(users.getPassword());
-            users.setPassword(hashPassword);
-            savedUser = userRepository.save(users);
-            if(savedUser.getId() > 0){
-                response = ResponseEntity
-                        .status(HttpStatus.CREATED)
-                        .body("User details registered");
-            }
-        } catch (Exception e){
-            response = ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Exception occurred: " + e.getMessage());
-        }
-
-        return response;
-    }
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
+//
+//    @PostMapping("/register")
+//    public ResponseEntity<String> registerUser(@RequestBody Users users){
+//        Users savedUser = null;
+//        ResponseEntity response = null;
+//        try {
+//            String hashPassword = passwordEncoder.encode(users.getPassword());
+//            users.setPassword(hashPassword);
+//            savedUser = userRepository.save(users);
+//            if(savedUser.getId() > 0){
+//                response = ResponseEntity
+//                        .status(HttpStatus.CREATED)
+//                        .body("User details registered");
+//            }
+//        } catch (Exception e){
+//            response = ResponseEntity
+//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Exception occurred: " + e.getMessage());
+//        }
+//
+//        return response;
+//    }
 
     @RequestMapping("/user")
-    public Users getUserDetailsAfterLogin(Authentication authentication){
-        List<Users> users = userRepository.findByEmail(authentication.getName());
-        if(users.size() > 0){
+    public Users getUserDetailsAfterLogin(Principal user) {
+        List<Users> users = userRepository.findByEmail(user.getName());
+        if (users.size() > 0) {
             return users.get(0);
-        } else {
+        }else {
             return null;
         }
+
     }
 
 

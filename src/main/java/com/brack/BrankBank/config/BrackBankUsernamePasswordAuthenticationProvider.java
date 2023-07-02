@@ -34,7 +34,7 @@ public class BrackBankUsernamePasswordAuthenticationProvider implements Authenti
         String password = authentication.getCredentials().toString();
         List<Users> users = userRepository.findByEmail(username);
         if(users.size() > 0){
-            if(passwordEncoder.matches(password, users.get(0).getPassword())){
+            if(passwordEncoder.matches(password, users.get(0).getPwd())){
                 return new UsernamePasswordAuthenticationToken(username, password, getGrantedAuthorities(users.get(0).getAuthorities()));
             } else {
                 throw new BadCredentialsException("Incorrect credentials");

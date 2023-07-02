@@ -9,41 +9,31 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "USERS")
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
-    private Integer id;
-
-    @Column(name = "name")
+    private int id;
     private String name;
-    @Column(name = "email")
     private String email;
-
     @Column(name = "mobile_number")
     private String mobileNumber;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "pwd")
-    private String password;
-    @Column(name = "role")
+    @JsonIgnore
+    private String pwd;
     private String role;
-
     @Column(name = "create_dt")
-    private Date createdDate;
+    private String createDt;
 
     @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<Authority> authorities;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -71,12 +61,12 @@ public class Users {
         this.mobileNumber = mobileNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public String getRole() {
@@ -87,12 +77,12 @@ public class Users {
         this.role = role;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public String getCreateDt() {
+        return createDt;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreateDt(String createDt) {
+        this.createDt = createDt;
     }
 
     public Set<Authority> getAuthorities() {

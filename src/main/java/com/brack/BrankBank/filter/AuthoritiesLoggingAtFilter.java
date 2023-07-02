@@ -13,8 +13,8 @@ public class AuthoritiesLoggingAtFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        LOG.info("Authentication is in progress...");
+        LOG.info("Authentication Validation is in progress");
         chain.doFilter(request, response);
-
     }
+
 }
