@@ -21,30 +21,30 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<String> registerUser(@RequestBody Users users){
-//        Users savedUser = null;
-//        ResponseEntity response = null;
-//        try {
-//            String hashPassword = passwordEncoder.encode(users.getPassword());
-//            users.setPassword(hashPassword);
-//            savedUser = userRepository.save(users);
-//            if(savedUser.getId() > 0){
-//                response = ResponseEntity
-//                        .status(HttpStatus.CREATED)
-//                        .body("User details registered");
-//            }
-//        } catch (Exception e){
-//            response = ResponseEntity
-//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Exception occurred: " + e.getMessage());
-//        }
-//
-//        return response;
-//    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody Users users){
+        Users savedUser = null;
+        ResponseEntity response = null;
+        try {
+            String hashPassword = passwordEncoder.encode(users.getPwd());
+            users.setPwd(hashPassword);
+            savedUser = userRepository.save(users);
+            if(savedUser.getId() > 0){
+                response = ResponseEntity
+                        .status(HttpStatus.CREATED)
+                        .body("User details registered");
+            }
+        } catch (Exception e){
+            response = ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Exception occurred: " + e.getMessage());
+        }
+
+        return response;
+    }
 
     @RequestMapping("/user")
     public Users getUserDetailsAfterLogin(Principal user) {

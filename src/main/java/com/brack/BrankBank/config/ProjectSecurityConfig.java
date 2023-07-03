@@ -42,20 +42,19 @@ public class ProjectSecurityConfig {
                         configuration.setMaxAge(3600L);
 
                         return configuration;
-                    };
+                    }
+
+                    ;
                 }).and().csrf().disable()
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-//                .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
-
-                .authorizeHttpRequests()
+                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).authorizeHttpRequests()
                 .requestMatchers("/my-account").hasAnyRole("USER", "ADMIN") //Any AUTHORITY
                 .requestMatchers("/my-balance").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/my-loans").hasAnyRole("USER", "ADMIN") // ONLY THOSE WITH VIEW LOANS AUTH
                 .requestMatchers("/my-cards").hasAnyRole("USER", "ADMIN") // ONY
-                .requestMatchers ("/user").authenticated()
+                .requestMatchers("/user").authenticated()
                 .requestMatchers("/notices", "/register").permitAll()
                 .and().formLogin()
                 .and().httpBasic();
