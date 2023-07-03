@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collections;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
 public class ProjectSecurityConfig {
@@ -49,15 +52,22 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).authorizeHttpRequests()
+                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+                .authorizeHttpRequests()
+                .requestMatchers(toH2Console()).permitAll()
                 .requestMatchers("/my-account").hasAnyRole("USER", "ADMIN") //Any AUTHORITY
                 .requestMatchers("/my-balance").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/my-loans").hasAnyRole("USER", "ADMIN") // ONLY THOSE WITH VIEW LOANS AUTH
+                .requestMatchers("/my-loans").authenticated()
+//                .requestMatchers("/my-loans").hasAnyRole("USER", "ADMIN") // ONLY THOSE WITH VIEW LOANS AUTH
                 .requestMatchers("/my-cards").hasAnyRole("USER", "ADMIN") // ONY
                 .requestMatchers("/user").authenticated()
-                .requestMatchers("/notices", "/register").permitAll()
+                .requestMatchers("/notices", "/register","/h2-console").permitAll()
+
                 .and().formLogin()
                 .and().httpBasic();
+
+        http
+                .headers().frameOptions().disable();
         return http.build();
 
 
