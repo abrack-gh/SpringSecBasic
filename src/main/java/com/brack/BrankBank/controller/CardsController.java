@@ -18,8 +18,8 @@ public class CardsController {
     private CardsRepository cardsRepository;
 
     @GetMapping("/my-cards")
-    public List<Cards> getCards(@RequestParam Integer id){
-        List<Cards> cards = cardsRepository.getCardsByCustomerId(id);
+    public List<Cards> getCards(@RequestParam String email){
+        List<Cards> cards = cardsRepository.getCardsByCustomerEmail(email);
         if(cards != null){
             return cards;
         } else {

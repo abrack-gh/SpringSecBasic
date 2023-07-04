@@ -13,8 +13,8 @@ public class AccountController {
     private AccountsRepository accountsRepository;
 
     @GetMapping("/my-account")
-    public Accounts getAccountDetails(@RequestParam Integer id){
-    Accounts accounts = accountsRepository.findAccountsByCustomerId(id);
+    public Accounts getAccountDetails(@RequestParam String email){
+    Accounts accounts = accountsRepository.findAccountsByCustomerEmail(email);
         if(accounts != null){
             return accounts;
         } else {

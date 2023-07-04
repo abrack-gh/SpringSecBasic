@@ -11,6 +11,6 @@ import java.util.List;
 public interface LoansRepository extends CrudRepository<Loans, Long> {
 
 //    @PreAuthorize("hasRole('USER')")
-    List<Loans> findByCustomerIdOrderByStartDate(int customerId);
+    List<Loans> findByCustomerEmailOrderByStartDate(String email);
 
 }

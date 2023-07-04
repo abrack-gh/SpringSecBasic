@@ -20,8 +20,8 @@ public class LoansController {
 
     @GetMapping("/my-loans")
     @PostAuthorize("hasRole('USER')") //method level security
-    public List<Loans> getLoanDetails(@RequestParam Integer id){
-        List<Loans> loans = loansRepository.findByCustomerIdOrderByStartDate(id);
+    public List<Loans> getLoanDetails(@RequestParam String email){
+        List<Loans> loans = loansRepository.findByCustomerEmailOrderByStartDate(email);
         if(loans != null){
             return loans;
         } else {
